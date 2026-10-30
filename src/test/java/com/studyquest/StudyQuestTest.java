@@ -34,21 +34,21 @@ public class StudyQuestTest {
         boolean leveled = warrior.gainXP(needed);
         assertTrue(leveled);
         assertEquals(2, warrior.getLevel());
-        assertEquals(140, warrior.getMaxHp()); // 120 + 20
-        assertEquals(18, warrior.getAttack());  // 14 + 4
+        assertEquals(140, warrior.getMaxHp());
+        assertEquals(18, warrior.getAttack());
     }
 
     @Test
     void testInventoryAndShop() throws Exception {
         Shop shop = state.getShop();
         Item potion = shop.getCatalog().get(0);
+        warrior.getInventory().addGold(100);
         int initialGold = warrior.getInventory().getGold();
 
         shop.buy(potion, warrior);
         assertEquals(initialGold - potion.getPrice(), warrior.getInventory().getGold());
         assertEquals(1, warrior.getInventory().getItems().size());
 
-        // Test consumable effect
         warrior.takeDamage(30);
         int damagedHp = warrior.getHp();
         boolean used = warrior.getInventory().useItem(potion, warrior);
