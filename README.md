@@ -52,7 +52,6 @@ StudyQuest/
    ```
 
 2. **Buat Branch Sendiri:**
-   Jangan pernah push langsung ke branch `main`. Setiap anggota membuat branch sesuai modul:
    - Anggota 1: `feature/character-auth`
    - Anggota 2: `feature/quest-management`
    - Anggota 3: `feature/inventory-shop`
