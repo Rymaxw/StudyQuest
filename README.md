@@ -7,7 +7,7 @@ Teknik Informatika / Sains Data - Telkom University Purwokerto
 
 | No | Anggota | Peran / Modul | Package | Konsep OOP Utama |
 |---|---|---|---|---|
-| **1** | **Jury Maxwell (103132400023)** *(Ketua)* | **Modul 1: Karakter & Akun** | `com.studyquest.character` | Abstract Class, Inheritance, Interface, Template Method |
+| **1** | **Jury Maxwell (103132400023)** | **Modul 1: Karakter & Akun** | `com.studyquest.character` | Abstract Class, Inheritance, Interface, Template Method |
 | 2 | Anggota 2 | Modul 2: Manajemen Quest | `com.studyquest.quest` | Abstract Class, Polymorphism, Factory, Observer (Publisher) |
 | 3 | Anggota 3 | Modul 3: Inventory & Shop | `com.studyquest.item` | Interface Ganda, Composition, Custom Exception |
 | 4 | Anggota 4 | Modul 4: Boss Battle | `com.studyquest.battle` | Abstract Class, Polymorphism, State Machine, Factory |
