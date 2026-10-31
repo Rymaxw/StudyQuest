@@ -3,148 +3,53 @@ package com.studyquest.item;
 import com.studyquest.character.Character;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Shop implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private List<Item> catalog;
-    private double sellRatio;
+    private final List<Item> catalog = new ArrayList<>();
+    private final double sellRatio = 0.5;
 
     public Shop() {
-        this.catalog = new ArrayList<>();
-        this.sellRatio = 0.5;
         loadDefaultCatalog();
     }
 
     public void loadDefaultCatalog() {
-        this.catalog.clear();
-        this.catalog.add(new Consumable("POT_HP", "Potion HP", 30, EffectType.HEAL_HP, 50));
-        this.catalog.add(new Consumable("POT_MP", "Potion MP", 30, EffectType.RESTORE_MP, 30));
-        this.catalog.add(new Consumable(
-                "XP_BOOST", "XP Booster", EffectType.XP_BOOST.getLabel() + " +50",
-                60, Rarity.RARE, 1, EffectType.XP_BOOST, 50
-        ));
-        this.catalog.add(new Equipment("WPN_SWORD", "Iron Sword", 100, EquipSlot.WEAPON, 0, 8, 0));
-        this.catalog.add(new Equipment("WPN_STAFF", "Mage Staff", 100, EquipSlot.WEAPON, 0, 0, 8));
-        this.catalog.add(new Equipment("ARM_LEATHER", "Leather Armor", 80, EquipSlot.ARMOR, 30, 0, 0));
+        catalog.clear();
+        catalog.add(new Consumable("c1", "Health Potion", "Memulihkan 40 HP", 20, Rarity.COMMON, 1, EffectType.HEAL_HP, 40));
+        catalog.add(new Consumable("c2", "Mana Potion", "Memulihkan 25 MP", 25, Rarity.COMMON, 1, EffectType.RESTORE_MP, 25));
+        catalog.add(new Consumable("c3", "XP Booster", "Mendapatkan 50 XP instan", 50, Rarity.RARE, 2, EffectType.XP_BOOST, 50));
+        catalog.add(new Equipment("e1", "Iron Sword", "Pedang besi (+6 ATK)", 100, Rarity.COMMON, 1, EquipSlot.WEAPON, 0, 6, 0));
+        catalog.add(new Equipment("e2", "Mage Staff", "Tongkat sihir (+8 INT)", 100, Rarity.COMMON, 1, EquipSlot.WEAPON, 0, 0, 8));
+        catalog.add(new Equipment("e3", "Leather Armor", "Pelindung kulit (+30 HP)", 80, Rarity.COMMON, 1, EquipSlot.ARMOR, 30, 0, 0));
     }
 
-    public List<Item> getCatalog() {
-        return Collections.unmodifiableList(this.catalog);
+    public void buy(Item item, Character character) throws InsufficientGoldException, InventoryFullException {
+        if (character == null) return;
+        if (!item.canBePurchasedBy(character)) {
+            throw new InsufficientGoldException(item.getPrice(), character.getInventory().getGold());
+        }
+        character.getInventory().spendGold(item.getPrice());
+        character.getInventory().addItem(item);
     }
 
-    public List<Item> filterByType(String type) {
-        if (type == null || type.equalsIgnoreCase("ALL")) {
-            return Collections.unmodifiableList(this.catalog);
-        }
-        List<Item> filtered = new ArrayList<>();
-        for (Item item : this.catalog) {
-            if (item.getItemType().equalsIgnoreCase(type)) {
-                filtered.add(item);
-            }
-        }
-        return Collections.unmodifiableList(filtered);
-    }
-
-    public Item findById(String id) {
-        if (id == null) {
-            return null;
-        }
-        for (Item item : this.catalog) {
-            if (item.getId().equals(id)) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public void buy(Item i, Character c) throws InsufficientGoldException, InventoryFullException {
-        if (i == null || c == null || c.getInventory() == null) {
-            throw new IllegalArgumentException("Item dan karakter tidak boleh null.");
-        }
-        if (c.getLevel() < i.getMinLevel()) {
-            throw new IllegalArgumentException("Level karakter belum mencukupi.");
-        }
-
-        Inventory inv = c.getInventory();
-        if (inv.isFull()) {
-            throw new InventoryFullException(inv.getCapacity());
-        }
-
-        inv.spendGold(i.getPrice());
-        inv.addItem(copyItem(i));
-    }
-
-    public int sell(Item i, Character c) {
-        if (i == null || c == null || c.getInventory() == null || !c.getInventory().contains(i)) {
+    public int sell(Item item, Character character) {
+        if (character == null || !character.getInventory().getItems().contains(item)) {
             return 0;
         }
-
-        Inventory inv = c.getInventory();
-        Item target = resolveSellTarget(i, inv);
-
-        if (target instanceof Equipment eq && eq.isEquipped()) {
-            inv.unequip(eq.getSlot(), c);
-        }
-
-        inv.removeItem(target);
-        int earned = sellPrice(target);
-        inv.addGold(earned);
-        return earned;
+        int price = sellPrice(item);
+        character.getInventory().removeItem(item);
+        character.getInventory().addGold(price);
+        return price;
     }
 
-    private int sellPrice(Item i) {
-        return (int) Math.floor(i.getPrice() * this.sellRatio);
+    public int sellPrice(Item item) {
+        return (int) (item.getPrice() * sellRatio);
     }
 
-    private Item copyItem(Item i) {
-        if (i instanceof Consumable cons) {
-            return new Consumable(
-                    cons.getId(),
-                    cons.getName(),
-                    cons.getDescription(),
-                    cons.getPrice(),
-                    cons.getRarity(),
-                    cons.getMinLevel(),
-                    cons.getEffectType(),
-                    cons.getEffectValue()
-            );
-        }
-        if (i instanceof Equipment eq) {
-            return new Equipment(
-                    eq.getId(),
-                    eq.getName(),
-                    eq.getDescription(),
-                    eq.getPrice(),
-                    eq.getRarity(),
-                    eq.getMinLevel(),
-                    eq.getSlot(),
-                    eq.getBonusHp(),
-                    eq.getBonusAtk(),
-                    eq.getBonusInt()
-            );
-        }
-        return i;
-    }
-
-    private Item resolveSellTarget(Item query, Inventory inv) {
-        for (Item item : inv.getItems()) {
-            if (item == query) {
-                return item;
-            }
-        }
-        for (Item item : inv.getItems()) {
-            if (item.equals(query) && item instanceof Equipment eq && !eq.isEquipped()) {
-                return item;
-            }
-        }
-        for (Item item : inv.getItems()) {
-            if (item.equals(query)) {
-                return item;
-            }
-        }
-        return query;
+    public List<Item> getCatalog() { return catalog; }
+    public List<Item> filterByType(String type) {
+        return catalog.stream().filter(i -> i.getItemType().toLowerCase().contains(type.toLowerCase())).toList();
     }
 }

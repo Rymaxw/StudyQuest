@@ -1,21 +1,12 @@
 package com.studyquest.item;
 
 public class InventoryFullException extends Exception {
-    private static final long serialVersionUID = 1L;
-
-    private int capacity;
+    private final int capacity;
 
     public InventoryFullException(int capacity) {
-        super("Inventory sudah penuh! Kapasitas maksimal: " + capacity + " item.");
+        super("Inventory penuh! Maksimal kapasitas: " + capacity);
         this.capacity = capacity;
     }
 
-    public int getCapacity() {
-        return this.capacity;
-    }
-
-    @Override
-    public String getMessage() {
-        return "Inventory sudah penuh! Kapasitas maksimal: " + this.capacity + " item.";
-    }
+    public int getCapacity() { return capacity; }
 }
