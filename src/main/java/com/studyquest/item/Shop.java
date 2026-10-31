@@ -22,7 +22,10 @@ public class Shop implements Serializable {
         this.catalog.clear();
         this.catalog.add(new Consumable("POT_HP", "Potion HP", 30, EffectType.HEAL_HP, 50));
         this.catalog.add(new Consumable("POT_MP", "Potion MP", 30, EffectType.RESTORE_MP, 30));
-        this.catalog.add(new Consumable("XP_BOOST", "XP Booster", 60, EffectType.XP_BOOST, 50));
+        this.catalog.add(new Consumable(
+                "XP_BOOST", "XP Booster", EffectType.XP_BOOST.getLabel() + " +50",
+                60, Rarity.RARE, 1, EffectType.XP_BOOST, 50
+        ));
         this.catalog.add(new Equipment("WPN_SWORD", "Iron Sword", 100, EquipSlot.WEAPON, 0, 8, 0));
         this.catalog.add(new Equipment("WPN_STAFF", "Mage Staff", 100, EquipSlot.WEAPON, 0, 0, 8));
         this.catalog.add(new Equipment("ARM_LEATHER", "Leather Armor", 80, EquipSlot.ARMOR, 30, 0, 0));

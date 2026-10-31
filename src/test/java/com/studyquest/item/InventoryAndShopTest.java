@@ -249,6 +249,17 @@ public class InventoryAndShopTest {
         assertEquals(3, shop.filterByType("CONSUMABLE").size());
         assertEquals(3, shop.filterByType("EQUIPMENT").size());
 
+        Item xpBooster = shop.findById("XP_BOOST");
+        assertNotNull(xpBooster);
+        assertEquals(Rarity.RARE, xpBooster.getRarity());
+        assertEquals(60, xpBooster.getPrice());
+        assertEquals(1, xpBooster.getMinLevel());
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Consumable("ZERO_POT", "Invalid Potion", 10, EffectType.HEAL_HP, 0)
+        );
+
         inventory.addGold(250);
         shop.buy(shop.findById("POT_MP"), hero);
         shop.buy(shop.findById("ARM_LEATHER"), hero);
