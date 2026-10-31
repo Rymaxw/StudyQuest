@@ -13,8 +13,8 @@ public class Consumable extends Item implements Usable {
         if (type == null) {
             throw new IllegalArgumentException("EffectType tidak boleh null.");
         }
-        if (value < 0) {
-            throw new IllegalArgumentException("Effect value tidak boleh negatif.");
+        if (value <= 0) {
+            throw new IllegalArgumentException("Effect value harus lebih dari 0.");
         }
         this.effectType = type;
         this.effectValue = value;
@@ -26,8 +26,8 @@ public class Consumable extends Item implements Usable {
         if (type == null) {
             throw new IllegalArgumentException("EffectType tidak boleh null.");
         }
-        if (value < 0) {
-            throw new IllegalArgumentException("Effect value tidak boleh negatif.");
+        if (value <= 0) {
+            throw new IllegalArgumentException("Effect value harus lebih dari 0.");
         }
         this.effectType = type;
         this.effectValue = value;
