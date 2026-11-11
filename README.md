@@ -21,7 +21,7 @@ Program Studi S1 Sains Data - Telkom University Purwokerto
 StudyQuest/
 ├── pom.xml
 ├── README.md
-├── Docs/                   <-- Dokumentasi acuan tim (PRD, TRD, AFD, DBD, BSD, IPD)
+├── Docs/                   <-- PRD, TRD, AFD, DBD, BSD, IPD, dan Panduan Role per Modul
 ├── src/
 │   ├── main/
 │   │   ├── java/
@@ -53,7 +53,9 @@ StudyQuest/
    ```
 
 2. **Baca Acuan Dokumentasi:**
-   Pelajari keenam dokumen spesifikasi pada folder `Docs/` sebelum mulai membuat kelas pada package masing-masing.
+   Mulai dari `Docs/7. Panduan Role per Modul - StudyQuest.md`, bagian "Aturan bersama" dan bagian modulmu. Bagian itu menunjuk bagian PRD, TRD, AFD, DBD, BSD, dan IPD yang perlu dibaca. Kalau memakai coding agent, salin prompt di akhir bagian modulmu.
+
+   Acuan terbaru: Revisi 1.3. Data disimpan lokal, pelemahan boss hanya mengurangi HP, dan aturan Daily serta klaim hadiah telah disetujui. Max memegang `MainApp`, `Router`, `HubView`, dan `theme.css`; Marcell memegang kerangka `GameController`. Detailnya ada di PRD §14 dan panduan role.
 
 3. **Buat Branch Sendiri:**
    Jangan pernah push langsung ke branch `main`. Setiap anggota bekerja pada branch modulnya masing-masing lalu mengajukan Pull Request ke `main`.
