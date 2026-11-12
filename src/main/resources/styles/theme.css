@@ -1,0 +1,29 @@
+/* Kertas hangat untuk baca panjang; kayu untuk ruangan; teal untuk aksi dan fokus. */
+.root {
+    -fx-font-family: "System";
+    -fx-font-size: 15px;
+    -fx-background-color: #eee2cb;
+    -fx-text-fill: #30251c;
+}
+.label { -fx-text-fill: #30251c; }
+.title { -fx-font-family: "Georgia"; -fx-font-size: 28px; -fx-font-weight: bold; }
+.paper { -fx-background-color: #fff8e8; -fx-padding: 28; -fx-border-color: #6c5037; -fx-border-width: 2; }
+.hub { -fx-padding: 16 40; }
+.button, .radio-button { -fx-cursor: hand; -fx-min-height: 44; }
+.button {
+    -fx-background-color: #245a50; -fx-text-fill: #ffffff; -fx-padding: 10 18;
+    -fx-background-radius: 3; -fx-border-radius: 3; -fx-border-color: #245a50; -fx-border-width: 2;
+}
+.button:hover { -fx-background-color: #173e37; -fx-underline: true; }
+.button:pressed { -fx-background-color: #102f29; -fx-translate-y: 1; }
+.button:focused, .radio-button:focused { -fx-border-color: #a04b17; -fx-border-width: 3; -fx-border-insets: -4; }
+.button:disabled { -fx-cursor: default; -fx-opacity: 0.6; }
+.text-field { -fx-background-color: #ffffff; -fx-text-fill: #30251c; -fx-border-color: #6c5037; -fx-min-height: 44; }
+.text-field:focused { -fx-border-color: #245a50; -fx-border-width: 3; }
+.room { -fx-background-color: #c9a575; -fx-border-color: #6c5037; -fx-border-width: 8; }
+.room:focused { -fx-border-color: #245a50; }
+.room-object { -fx-background-color: #fff8e8; -fx-text-fill: #30251c; -fx-border-color: #6c5037; }
+.room-object:hover { -fx-background-color: #eee2cb; }
+.room-object:pressed { -fx-background-color: #d9c4a0; }
+.room-object:focused { -fx-border-color: #245a50; -fx-border-width: 3; }
+.player { -fx-background-color: #245a50; -fx-text-fill: #ffffff; -fx-alignment: center; -fx-font-weight: bold; }
